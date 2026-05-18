@@ -10,6 +10,9 @@ import FamilyWallet from './FamilyWallet';
 import ReportGenerator from './ReportGenerator';
 import ReceiptScanner from './ReceiptScanner';
 import SavingsGoals from "./SavingsGoals";
+import BillReminder from "./BillReminder";
+import Savings from "./Savings";
+import DailyAdvice from "./DailyAdvice";
 
 interface Transaction {
   id: string;
@@ -28,7 +31,7 @@ const formatRupiah = (amount: number) =>
     minimumFractionDigits: 0,
   }).format(amount);
 
-type Tab = 'beranda' | 'dompet' | 'laporan' | 'anggaran' | 'struk' | 'goals';
+type Tab = 'beranda' | 'dompet' | 'laporan' | 'anggaran' | 'struk' | 'goals' | 'tagihan' |'tabungan' | 'saran';
 
 export default function Dashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -88,7 +91,10 @@ export default function Dashboard() {
     { id: 'laporan', label: '📊', title: 'Laporan' },
     { id: 'anggaran', label: '💰', title: 'Anggaran' },
     { id: 'goals' , label: '🎯', title: 'Goals'},
+    { id: 'tabungan', label: '🏦', title: 'Tabungan' },
+    { id: 'tagihan', label: '🔔', title: 'Tagihan' },
     { id: 'struk', label: '🧾', title: 'Struk' },
+    { id: 'saran', label: '💡', title: 'Saran' },
   ];
 
   return (
@@ -163,6 +169,9 @@ export default function Dashboard() {
         )}
         {activeTab === 'anggaran' && <Budget transactions={thisMonthTrx} />}
         {activeTab === 'goals' && <SavingsGoals />}
+        {activeTab === 'tagihan' && <BillReminder />}
+        {activeTab === 'tabungan' && <Savings />}
+        {activeTab === 'saran' && <DailyAdvice />}
         {activeTab === 'struk' && <ReceiptScanner />}
       </div>
 
