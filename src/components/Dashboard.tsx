@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
-import { collection, query, onSnapshot } from 'firebase/firestore';
+import { collection, query, onSnapshot , where } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import TransactionForm from './TransactionForm';
 import TransactionList from './TransactionList';
@@ -38,7 +38,8 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('beranda');
 
   useEffect(() => {
-    const q1 = query(collection(db, 'transactions'));
+    const q1 = query(collection(db, 'transactions'), 
+    where("uid", "==", auth.currentUser?.uid));
     const unsub1 = onSnapshot(q1, (snapshot) => {
       setTransactions(
         snapshot.docs.map((doc) => ({

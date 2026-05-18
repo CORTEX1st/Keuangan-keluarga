@@ -7,7 +7,9 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
-} from 'firebase/firestore';
+  where,
+} from 'firebase/firestore'; 
+import { auth } from "../firebase";
 
 interface Transaction {
   id: string;
@@ -33,6 +35,7 @@ export default function TransactionList() {
   useEffect(() => {
     const q = query(
       collection(db, 'transactions'),
+      where("uid", "==", auth.currentUser?.uid),
       orderBy('createdAt', 'desc')
     );
     const unsub = onSnapshot(q, (snapshot) => {
