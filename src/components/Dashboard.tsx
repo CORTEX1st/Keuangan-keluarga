@@ -9,6 +9,7 @@ import Reports from './Reports';
 import FamilyWallet from './FamilyWallet';
 import ReportGenerator from './ReportGenerator';
 import ReceiptScanner from './ReceiptScanner';
+import SavingsGoals from "./SavingsGoals";
 
 interface Transaction {
   id: string;
@@ -27,7 +28,7 @@ const formatRupiah = (amount: number) =>
     minimumFractionDigits: 0,
   }).format(amount);
 
-type Tab = 'beranda' | 'dompet' | 'laporan' | 'anggaran' | 'struk';
+type Tab = 'beranda' | 'dompet' | 'laporan' | 'anggaran' | 'struk' | 'goals';
 
 export default function Dashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -86,6 +87,7 @@ export default function Dashboard() {
     { id: 'dompet', label: '👨‍👩‍👧', title: 'Bersama' },
     { id: 'laporan', label: '📊', title: 'Laporan' },
     { id: 'anggaran', label: '💰', title: 'Anggaran' },
+    { id: 'goals' , label: '🎯', title: 'Goals'},
     { id: 'struk', label: '🧾', title: 'Struk' },
   ];
 
@@ -160,6 +162,7 @@ export default function Dashboard() {
           </div>
         )}
         {activeTab === 'anggaran' && <Budget transactions={thisMonthTrx} />}
+        {activeTab === 'goals' && <SavingsGoals />}
         {activeTab === 'struk' && <ReceiptScanner />}
       </div>
 
